@@ -13,10 +13,10 @@ registry_enabled: false
 # registry_disk_size: "10Gi"
 
 # Metrics Server deployment
-metrics_server_enabled: false
-# metrics_server_kubelet_insecure_tls: true
-# metrics_server_metric_resolution: 60s
-# metrics_server_kubelet_preferred_address_types: "InternalIP"
+metrics_server_enabled: true
+metrics_server_kubelet_insecure_tls: true
+metrics_server_metric_resolution: 60s
+metrics_server_kubelet_preferred_address_types: "InternalIP"
 
 # Rancher Local Path Provisioner
 local_path_provisioner_enabled: false
@@ -80,22 +80,22 @@ rbd_provisioner_enabled: false
 # rbd_provisioner_reclaim_policy: Delete
 
 # Nginx ingress controller deployment
-ingress_nginx_enabled: false
-# ingress_nginx_host_network: false
+ingress_nginx_enabled: true
+ingress_nginx_host_network: false
 ingress_publish_status_address: ""
-# ingress_nginx_nodeselector:
-#   kubernetes.io/os: "linux"
-# ingress_nginx_tolerations:
-#   - key: "node-role.kubernetes.io/master"
-#     operator: "Equal"
-#     value: ""
-#     effect: "NoSchedule"
-# ingress_nginx_namespace: "ingress-nginx"
-# ingress_nginx_insecure_port: 80
-# ingress_nginx_secure_port: 443
-# ingress_nginx_configmap:
-#   map-hash-bucket-size: "128"
-#   ssl-protocols: "SSLv2"
+ingress_nginx_nodeselector:
+  ingress: "nginx"
+ingress_nginx_tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"
+ingress_nginx_namespace: "ingress-nginx"
+ingress_nginx_insecure_port: 80
+ingress_nginx_secure_port: 443
+ingress_nginx_configmap:
+  map-hash-bucket-size: "128"
+  ssl-protocols: "SSLv2"
 # ingress_nginx_configmap_tcp_services:
 #   9000: "default/example-go:8080"
 # ingress_nginx_configmap_udp_services:
