@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-client-provisioner
+  namespace: {{ nfs_client_provisioner_namespace }}
+  labels: 
+    nfs-client-provisioner: nfs-client-provisioner
+spec:
+  capacity:
+    storage: {{ nfs_client_provisioner_storageclass.storageSize }}
+  volumeMode: Filesystem
+  accessModes:
+    - {{ nfs_client_provisioner_storageclass.accessModes }}
+  persistentVolumeReclaimPolicy: {{ nfs_client_provisioner_storageclass.reclaimPolicy }}
+  storageClassName: ""
+  mountOptions:
+  nfs:
+    server: {{ nfs_client_provisioner_nfs.server }}
+    path: {{ nfs_client_provisioner_nfs.path }}

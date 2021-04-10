@@ -1,0 +1,12 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ nfs_client_provisioner_storageclass.name }}
+  namespace: {{ nfs_client_provisioner_namespace }}
+{% if nfs_client_provisioner_storageclass.defaultClass %}
+  annotations:
+    storageclass.kubernetes.io/is-default-class: true
+{% endif %}
+provisioner: {{ nfs_client_provisioner_storageclass.provisionerName }}
+reclaimPolicy: {{ nfs_client_provisioner_storageclass.reclaimPolicy }}

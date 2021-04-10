@@ -1,0 +1,27 @@
+---
+nfs_client_provisioner_enabled: false
+nfs_client_provisioner_namespace: kube-system
+nfs_client_provisioner_replicacount: 1
+nfs_client_provisioner_strategytype: Recreate
+nfs_client_provisioner_nfs:
+  server: localhost
+  path: /data
+  mountOptions:
+nfs_client_provisioner_storageclass:
+  create: true
+  provisionerName: nfs-client-provisioner
+  defaultClass: false
+  name: nfs-client
+  reclaimPolicy: Delete
+  accessModes: ReadWriteOnce
+  storageSize: 1Gi
+nfs_client_provisioner_resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+nfs_client_provisioner_nodeselector: {}
+nfs_client_provisioner_tolerations: []
+nfs_client_provisioner_affinity: {}

@@ -1,0 +1,14 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: leader-locking-nfs-client-provisioner-rb
+  namespace: {{ nfs_client_provisioner_namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: nfs-client-provisioner
+    namespace: {{ nfs_client_provisioner_namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: leader-locking-nfs-client-provisioner

@@ -1,0 +1,42 @@
+---
+- name: NFS Client Provisioner | Create addon dir
+  file:
+    path: "{{ kube_config_dir }}/addons/nfs_client_provisioner"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when:
+    - inventory_hostname == groups['kube-master'][0]
+
+- name: NFS Client Provisioner | Render Template
+  set_fact:
+    nfs_client_provisioner_templates:
+      - { name: nfs-client-provisioner-sa, file: nfs-client-provisioner-sa.yml, type: sa }
+      - { name: nfs-client-provisioner-cr, file: nfs-client-provisioner-cr.yml, type: cr }
+      - { name: nfs-client-provisioner-crb, file: nfs-client-provisioner-crb.yml, type: clusterrolebinding }
+      - { name: nfs-client-provisioner-role, file: nfs-client-provisioner-role.yml, type: role }
+      - { name: nfs-client-provisioner-rb, file: nfs-client-provisioner-rb.yml, type: rolebinding }
+      - { name: nfs-client-provisioner-pv, file: nfs-client-provisioner-pv.yml, type: pv }
+      - { name: nfs-client-provisioner-pvc, file: nfs-client-provisioner-pvc.yml, type: pvc }
+      - { name: nfs-client-provisioner-deployment, file: nfs-client-provisioner-deployment.yml, type: deployment }
+      - { name: nfs-client-provisioner-sc, file: nfs-client-provisioner-sc.yml, type: sc }
+
+- name: NFS Client Provisioner | Create manifests
+  template:
+    src: "{{ item.file }}.j2"
+    dest: "{{ kube_config_dir }}/addons/nfs_client_provisioner/{{ item.file }}"
+  with_items: "{{ nfs_client_provisioner_templates }}"
+  register: nfs_client_provisioner_manifests
+  when: inventory_hostname == groups['kube-master'][0]
+
+- name: NFS Client Provisioner | Apply manifests
+  kube:
+    name: "{{ item.item.name }}"
+    namespace: "{{ nfs_client_provisioner_namespace }}"
+    kubectl: "{{ bin_dir }}/kubectl"
+    resource: "{{ item.item.type }}"
+    filename: "{{ kube_config_dir }}/addons/nfs_client_provisioner/{{ item.item.file }}"
+    state: "latest"
+  with_items: "{{ nfs_client_provisioner_manifests.results }}"
+  when: inventory_hostname == groups['kube-master'][0]
