@@ -17,9 +17,6 @@ spec:
         app: nfs-client-provisioner
     spec:
       serviceAccountName: nfs-client-provisioner
-      nodeSelector:
-      affinity:
-      tolerations:
       containers:
         - name: nfs-client-provisioner
           image: {{ nfs_client_provisioner_image_repo }}:{{ nfs_client_provisioner_image_tag }}

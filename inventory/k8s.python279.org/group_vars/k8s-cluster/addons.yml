@@ -42,9 +42,6 @@ nfs_client_provisioner_resources:
   requests:
     cpu: 100m
     memory: 128Mi
-nfs_client_provisioner_nodeselector: {}
-nfs_client_provisioner_tolerations: []
-nfs_client_provisioner_affinity: {}
 
 # Rancher Local Path Provisioner
 local_path_provisioner_enabled: false
