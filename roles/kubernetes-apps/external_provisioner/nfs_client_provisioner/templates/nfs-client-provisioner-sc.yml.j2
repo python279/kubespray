@@ -10,3 +10,5 @@ metadata:
 {% endif %}
 provisioner: {{ nfs_client_provisioner_storageclass.provisionerName }}
 reclaimPolicy: {{ nfs_client_provisioner_storageclass.reclaimPolicy }}
+parameters:
+  archiveOnDelete: "false"

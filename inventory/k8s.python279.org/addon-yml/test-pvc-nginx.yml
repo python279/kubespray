@@ -5,7 +5,7 @@ metadata:
   name: my-pvc
   namespace: default
 spec:
-  storageClassName: "nfs-client"
+  storageClassName: managed-nfs-storage
   accessModes:
     - ReadWriteMany
   resources:

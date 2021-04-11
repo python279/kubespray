@@ -11,7 +11,7 @@ nfs_client_provisioner_storageclass:
   create: true
   provisionerName: nfs-client-provisioner
   defaultClass: false
-  name: nfs-client
+  name: managed-nfs-storage
   reclaimPolicy: Delete
   accessModes: ReadWriteOnce
   storageSize: 1Gi

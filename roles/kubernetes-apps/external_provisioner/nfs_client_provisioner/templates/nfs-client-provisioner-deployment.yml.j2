@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: nfs-client-provisioner
   namespace: {{ nfs_client_provisioner_namespace }}
+  labels:
+    app: nfs-client-provisioner
 spec:
   replicas: {{ nfs_client_provisioner_replicacount }}
   strategy:

@@ -31,10 +31,10 @@ nfs_client_provisioner_storageclass:
   create: true
   provisionerName: nfs-client-provisioner
   defaultClass: false
-  name: nfs-client
+  name: managed-nfs-storage
   reclaimPolicy: Delete
   accessModes: ReadWriteOnce
-  storageSize: 800Gi
+  storageSize: 1Gi
 nfs_client_provisioner_resources: 
   limits:
     cpu: 100m
