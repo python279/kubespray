@@ -26,6 +26,13 @@ spec:
   - name: nginx
     image: harbor.python279.org/library/nginx:1.19
     imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 250m
+        memory: 250Mi
+      requests:
+        cpu: 125m
+        memory: 125M
     volumeMounts:
     - name: html
       mountPath: /usr/share/nginx/html/
