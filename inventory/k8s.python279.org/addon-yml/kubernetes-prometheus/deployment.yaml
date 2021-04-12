@@ -23,8 +23,8 @@ spec:
             - "--storage.tsdb.path=/prometheus/"
           resources:
             limits:
-              cpu: 250m
-              memory: 250Mi
+              cpu: 2000m
+              memory: 2000Mi
             requests:
               cpu: 150m
               memory: 150Mi
