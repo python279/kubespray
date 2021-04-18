@@ -15,6 +15,6 @@ spec:
     app.kubernetes.io/component: monitoring
     app.kubernetes.io/name: prometheus
   ports:
-    - port: 9090
-      protocol: TCP
+    - protocol: TCP
+      port: 9090
       targetPort: prometheus-web 

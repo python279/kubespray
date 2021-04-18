@@ -29,15 +29,17 @@ data:
       - scheme: http
         static_configs:
         - targets:
-          - "alertmanager.monitoring.svc:9093"
+          - "alertmanager:9093"
     scrape_configs:
       - job_name: 'node-exporter'
         kubernetes_sd_configs:
-          - role: endpoints
+          - role: node
         relabel_configs:
-        - source_labels: [__meta_kubernetes_endpoints_name]
-          regex: 'node-exporter'
-          action: keep
+        - source_labels: [__address__]
+          action: replace
+          regex: (.+):.+
+          replacement: ${1}:9100
+          target_label: __address__
       
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
@@ -50,6 +52,7 @@ data:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
           regex: default;kubernetes;https
+      
       - job_name: 'kubernetes-nodes'
         scheme: https
         tls_config:

@@ -2,18 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: alertmanager
   name: alertmanager
   namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
-      app: alertmanager
+      app.kubernetes.io/component: monitoring
+      app.kubernetes.io/name: alertmanager
   template:
     metadata:
-      name: alertmanager
       labels:
-        app: alertmanager
+        app.kubernetes.io/component: monitoring
+        app.kubernetes.io/name: alertmanager
     spec:
       containers:
       - name: alertmanager
@@ -26,12 +37,12 @@ spec:
           protocol: TCP
           name: alertmanager
         resources:
-            requests:
-              cpu: 150m
-              memory: 150Mi
             limits:
-              cpu: 250m
-              memory: 250Mi
+              cpu: 4000m
+              memory: 16Gi
+            requests:
+              cpu: 1000m
+              memory: 1024Mi
         volumeMounts:
         - name: config-volume
           mountPath: /etc/alertmanager
@@ -39,6 +50,24 @@ spec:
           mountPath: /etc/alertmanager-templates
         - name: alertmanager
           mountPath: /alertmanager
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9093
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 9093
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
       - name: config-volume
         configMap:
@@ -47,4 +76,5 @@ spec:
         configMap:
           name: alertmanager-templates
       - name: alertmanager
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: alertmanager-pvc
