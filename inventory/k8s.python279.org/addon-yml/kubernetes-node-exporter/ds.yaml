@@ -35,10 +35,10 @@ spec:
         resources:
           limits:
             cpu: 250m
-            memory: 180Mi
+            memory: 250Mi
           requests:
-            cpu: 102m
-            memory: 180Mi
+            cpu: 150m
+            memory: 150Mi
         volumeMounts:
         - mountPath: /host/sys
           mountPropagation: HostToContainer
