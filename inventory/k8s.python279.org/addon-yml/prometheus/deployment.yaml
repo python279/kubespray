@@ -1,42 +1,69 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prometheus-deployment
-  namespace: monitoring
   labels:
-    app: prometheus-server
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: prometheus
+  name: prometheus
+  namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
-      app: prometheus-server
+      app.kubernetes.io/component: monitoring
+      app.kubernetes.io/name: prometheus
   template:
     metadata:
       labels:
-        app: prometheus-server
+        app.kubernetes.io/component: monitoring
+        app.kubernetes.io/name: prometheus
     spec:
       containers:
-        - name: prometheus
-          image: harbor.python279.org/prom/prometheus:v2.26.0
+        - image: harbor.python279.org/prom/prometheus:v2.26.0
+          name: prometheus
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
           resources:
             limits:
-              cpu: 2000m
-              memory: 2000Mi
+              cpu: 8000m
+              memory: 32Gi
             requests:
-              cpu: 150m
-              memory: 150Mi
+              cpu: 1000m
+              memory: 1024Mi
           ports:
             - containerPort: 9090
-              protocol: TCP
               name: prometheus-web
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
             - name: prometheus-storage-volume
               mountPath: /prometheus/
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
       volumes:
         - name: prometheus-config-volume
           configMap:
@@ -44,5 +71,5 @@ spec:
             name: prometheus-server-conf
         - name: prometheus-storage-volume
           persistentVolumeClaim:
-            claimName: prometheus-tsdb
+            claimName: prometheus-pvc
       serviceAccountName: prometheus

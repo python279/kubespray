@@ -13,6 +13,5 @@ spec:
       app.kubernetes.io/name: node-exporter
   ports:
   - name: node-exporter
-    protocol: TCP
     port: 9100
     targetPort: http-metrics

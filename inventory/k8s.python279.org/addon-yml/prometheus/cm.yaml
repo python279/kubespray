@@ -3,7 +3,8 @@ kind: ConfigMap
 metadata:
   name: prometheus-server-conf
   labels:
-    name: prometheus-server-conf
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: prometheus
   namespace: monitoring
 data:
   prometheus.rules: |-
@@ -93,7 +94,7 @@ data:
       
       - job_name: 'kube-state-metrics'
         static_configs:
-          - targets: ['kube-state-metrics.kube-system.svc.python279.org:8080']
+          - targets: ['kube-state-metrics:8080']
       - job_name: 'kubernetes-cadvisor'
         scheme: https
         tls_config:

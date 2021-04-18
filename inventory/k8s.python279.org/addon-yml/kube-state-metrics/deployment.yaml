@@ -6,9 +6,16 @@ metadata:
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/version: 2.0.0-rc.1
   name: kube-state-metrics
-  namespace: kube-system
+  namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
       app.kubernetes.io/name: kube-state-metrics
@@ -20,20 +27,23 @@ spec:
     spec:
       containers:
       - image: harbor.python279.org/k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-rc.1
+        name: kube-state-metrics
         livenessProbe:
           httpGet:
             path: /healthz
             port: 8080
-          initialDelaySeconds: 5
-          timeoutSeconds: 5
-        name: kube-state-metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
         resources:
           limits:
-            cpu: 250m
-            memory: 250Mi
+            cpu: 4000m
+            memory: 16Gi
           requests:
-            cpu: 150m
-            memory: 150Mi
+            cpu: 1000m
+            memory: 1024Mi
         ports:
         - containerPort: 8080
           name: http-metrics
@@ -43,8 +53,11 @@ spec:
           httpGet:
             path: /
             port: 8081
-          initialDelaySeconds: 5
-          timeoutSeconds: 5
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
         securityContext:
           runAsUser: 65534
       nodeSelector:
