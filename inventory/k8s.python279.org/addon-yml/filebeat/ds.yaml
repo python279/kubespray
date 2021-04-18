@@ -2,24 +2,34 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: filebeat
   name: filebeat
   namespace: monitoring
-  labels:
-    k8s-app: filebeat
 spec:
   selector:
     matchLabels:
-      k8s-app: filebeat
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: filebeat
   template:
     metadata:
       labels:
-        k8s-app: filebeat
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: filebeat
     spec:
       serviceAccountName: filebeat
       terminationGracePeriodSeconds: 30
       containers:
-      - name: filebeat
-        image: harbor.python279.org/library/filebeat:6.8.15
+      - image: harbor.python279.org/library/filebeat:6.8.15
+        name: filebeat
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+          requests:
+            cpu: 250m
+            memory: 250Mi
         args: [
           "-c", "/etc/filebeat.yml",
           "-e",

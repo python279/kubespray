@@ -1,34 +1,62 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kibana-logging
-  namespace: monitoring
   labels:
-    k8s-app: kibana-logging
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: kibana
+  name: kibana
+  namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
-      k8s-app: kibana-logging
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: kibana
   template:
     metadata:
       labels:
-        k8s-app: kibana-logging
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: kibana
     spec:
       containers:
-      - name: kibana-logging
-        image: harbor.python279.org/library/kibana:6.8.15
+      - image: harbor.python279.org/library/kibana:6.8.15
+        name: kibana
         resources:
           limits:
-            cpu: 1000m
-            memory: 1024Mi
+            cpu: 4000m
+            memory: 16Gi
           requests:
-            cpu: 150m
-            memory: 150Mi
+            cpu: 250m
+            memory: 250Mi
         env:
           - name: ELASTICSEARCH_URL
-            value: http://elasticsearch-logging:9200
+            value: http://elasticsearch:9200
         ports:
         - containerPort: 5601
           name: ui
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5601
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5601
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3

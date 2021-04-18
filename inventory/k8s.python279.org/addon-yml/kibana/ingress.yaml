@@ -1,8 +1,11 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: kibana-logging
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: kibana
+  name: kibana
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: nginx
@@ -11,6 +14,7 @@ spec:
   - host: kibana.python279.org
     http:
       paths:
-      - backend:
-          serviceName: kibana-logging
+      - path: /
+        backend:
+          serviceName: kibana
           servicePort: 5601

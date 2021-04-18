@@ -2,12 +2,16 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: logstash-service
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: logstash
+  name: logstash
   namespace: monitoring
 spec:
   selector:
-    app: logstash
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: logstash
   ports:
-  - protocol: TCP
-    port: 5044
-    targetPort: 5044
+  - port: 5044
+    protocol: TCP
+    targetPort: logstash

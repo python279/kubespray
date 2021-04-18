@@ -2,18 +2,20 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: filebeat
   name: filebeat
   namespace: monitoring
-  labels:
-    k8s-app: filebeat
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: filebeat
   labels:
-    k8s-app: filebeat
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: filebeat
+  name: filebeat
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources:
@@ -25,9 +27,12 @@ rules:
   - list
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: filebeat
   name: filebeat
 subjects:
 - kind: ServiceAccount
@@ -37,4 +42,3 @@ roleRef:
   kind: ClusterRole
   name: filebeat
   apiGroup: rbac.authorization.k8s.io
-

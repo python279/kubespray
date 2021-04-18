@@ -2,27 +2,35 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: elasticsearch-logging
-  namespace: monitoring
   labels:
-    k8s-app: elasticsearch-logging
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: elasticsearch
+  name: elasticsearch
+  namespace: monitoring
 spec:
-  serviceName: elasticsearch-logging
-  replicas: 1
-  updateStrategy:
-    type: RollingUpdate
+  serviceName: elasticsearch
+  replicas: 2
   selector:
     matchLabels:
-      k8s-app: elasticsearch-logging
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: elasticsearch
   template:
     metadata:
       labels:
-        k8s-app: elasticsearch-logging
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: elasticsearch
     spec:
-      serviceAccountName: elasticsearch-logging
+      serviceAccountName: elasticsearch
       containers:
       - image: harbor.python279.org/library/elasticsearch:6.8.15
-        name: elasticsearch-logging
+        name: elasticsearch
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 32Gi
+          requests:
+            cpu: 250m
+            memory: 250Mi
         ports:
         - containerPort: 9200
           name: db
@@ -31,20 +39,44 @@ spec:
           name: transport
           protocol: TCP
         volumeMounts:
-        - name: elasticsearch-logging
+        - name: elasticsearch-data
           mountPath: /data
         env:
         - name: "NAMESPACE"
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-      volumes:
-      - name: elasticsearch-logging
-        persistentVolumeClaim:
-          claimName: elasticsearch-logging
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9200
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
       initContainers:
       - image: harbor.python279.org/library/alpine:3.6
         command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
-        name: elasticsearch-logging-init
+        name: elasticsearch-init
         securityContext:
           privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: elasticsearch-data
+    spec:
+      storageClassName: managed-nfs-storage
+      resources:
+        requests:
+          storage: 300Gi
+      accessModes:
+      - ReadWriteOnce

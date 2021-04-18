@@ -2,35 +2,65 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logstash-deployment
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: logstash
+  name: logstash
   namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
-      app: logstash
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: logstash
   template:
     metadata:
       labels:
-        app: logstash
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: logstash
     spec:
       containers:
-      - name: logstash
-        image: harbor.python279.org/library/logstash:6.8.15
+      - image: harbor.python279.org/library/logstash:6.8.15
+        name: logstash
         resources:
           limits:
-            cpu: 1000m
-            memory: 1024Mi
+            cpu: 4000m
+            memory: 16Gi
           requests:
-            cpu: 150m
-            memory: 150Mi
+            cpu: 250m
+            memory: 250Mi
         ports:
         - containerPort: 5044
+          name: logstash
+          protocol: TCP
         volumeMounts:
           - name: config-volume
             mountPath: /usr/share/logstash/config
           - name: logstash-pipeline-volume
             mountPath: /usr/share/logstash/pipeline
+        livenessProbe:
+          tcpSocket:
+            port: 5044
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 5044
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
       - name: config-volume
         configMap:
