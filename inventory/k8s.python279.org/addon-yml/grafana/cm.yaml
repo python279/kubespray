@@ -2,6 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: grafana
   name: grafana-datasources
   namespace: monitoring
 data:
@@ -10,12 +13,12 @@ data:
         "apiVersion": 1,
         "datasources": [
             {
-               "access":"proxy",
+               "access": "proxy",
                "editable": true,
                "name": "prometheus",
                "orgId": 1,
                "type": "prometheus",
-               "url": "http://prometheus-service.monitoring.svc:8080",
+               "url": "http://prometheus:9090",
                "version": 1
             }
         ]

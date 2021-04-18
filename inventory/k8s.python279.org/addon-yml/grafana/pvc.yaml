@@ -2,7 +2,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: grafana-storage
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: grafana
+  name: grafana-pvc
   namespace: monitoring
 spec:
   storageClassName: managed-nfs-storage
@@ -10,4 +13,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi

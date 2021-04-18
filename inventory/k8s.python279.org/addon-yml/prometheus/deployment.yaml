@@ -36,8 +36,8 @@ spec:
               cpu: 8000m
               memory: 32Gi
             requests:
-              cpu: 1000m
-              memory: 1024Mi
+              cpu: 250m
+              memory: 250Mi
           ports:
             - containerPort: 9090
               name: prometheus-web

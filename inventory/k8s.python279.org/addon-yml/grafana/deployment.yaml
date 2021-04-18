@@ -2,43 +2,72 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: grafana
   name: grafana
   namespace: monitoring
 spec:
   replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
   selector:
     matchLabels:
-      app: grafana
+      app.kubernetes.io/component: monitoring
+      app.kubernetes.io/name: grafana
   template:
     metadata:
-      name: grafana
       labels:
-        app: grafana
+        app.kubernetes.io/component: monitoring
+        app.kubernetes.io/name: grafana
     spec:
       containers:
-      - name: grafana
-        image: harbor.python279.org/grafana/grafana:7.5.3-ubuntu
-        ports:
-        - name: grafana
-          protocol: TCP
-          containerPort: 3000
+      - image: harbor.python279.org/grafana/grafana:7.5.3-ubuntu
+        name: grafana
         resources:
           limits:
-            memory: 1Gi
-            cpu: 1000m
-          requests: 
-            memory: 500M
-            cpu: 500m
+            cpu: 8000m
+            memory: 32Gi
+          requests:
+            cpu: 250m
+            memory: 250Mi
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+          name: grafana
         volumeMounts:
           - mountPath: /var/lib/grafana
             name: grafana-storage
           - mountPath: /etc/grafana/provisioning/datasources
             name: grafana-datasources
             readOnly: false
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
         - name: grafana-storage
           persistentVolumeClaim:
-            claimName: grafana-storage
+            claimName: grafana-pvc
         - name: grafana-datasources
           configMap:
               defaultMode: 420
