@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    scheduler.alpha.kubernetes.io/critical-pod: ""
+  name: enflame-k8s-device-plugin
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: enflame-k8s-device-plugin
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: enflame-k8s-device-plugin
+    spec:
+      nodeSelector:
+        enflame-k8s-device-plugin: ture
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Equal
+          value: ''
+      priorityClassName: "system-node-critical"
+      containers:
+      - image: harbor.uat.enflame.cn/enflame.cn/k8s-device-plugin:latest
+        name: enflame-k8s-device-plugin
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: device-plugin
+            mountPath: /var/lib/kubelet/device-plugins
+          - name: sys
+            mountPath: /sys
+      volumes:
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+        - name: sys
+          hostPath:
+            path: /sys
