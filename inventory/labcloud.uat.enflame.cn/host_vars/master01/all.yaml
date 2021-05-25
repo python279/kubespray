@@ -1,4 +1,5 @@
 ---
+enflame_container_runtime: true
 node_labels:
   ingress: nginx
   Accelerator: enflame-t10
