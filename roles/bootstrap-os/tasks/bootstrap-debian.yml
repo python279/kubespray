@@ -97,3 +97,12 @@
     state: present
     use: apt
   become: true
+
+- name: Install additional packages fro kubernetes
+  package:
+    name:
+      - nfs-common
+      - ceph-common
+    state: present
+    use: apt
+  become: true

@@ -86,3 +86,11 @@
     name: "{{ ( (ansible_distribution_major_version | int) < 8) | ternary('libselinux-python','python3-libselinux') }}"
     state: present
   become: true
+
+- name: Install additional packages for kubernetes
+  package:
+    name:
+      - nfs-utils
+      - ceph-common
+    state: present
+  become: true
