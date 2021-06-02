@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distribute-train-operator
+  namespace: kube-system
+  labels:
+    name: distribute-train-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: distribute-train-operator
+  template:
+    metadata:
+      labels:
+        name: distribute-train-operator
+    spec:
+      nodeSelector:
+        #<your-k8s-host-name>是部署operator的Kubernetes节点hostname
+        kubernetes.io/hostname: k8s-host-name
+      containers:
+        - name: distribute-train-operator
+          #<harbor-url>是Harbor的地址
+          image: harbor-url/distribute-train/distribute-train-operator:v1
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /root
+              name: config-volume
+          env:
+            - name: JAR_BALL
+              #<rdis-ip> 是redis的ip
+              #<redis-password> 是redis的密码没有的话把这项参数去掉
+              #<redis-port> 是redis的端口 默认6379
+              value: "/distribute-train-operator-1.0.jar --k8s.kubeconfig=/root/config --spring.redis.host=rdis-ip --spring.redis.password=redis-password --spring.redis.port=redis-port"
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: config-volume
+          hostPath:
+            #将Kubernetes集群 master节点的 $HOME/.kube/config 文件复制到 <your-k8s-host-name>节点的 /root/.kube/ 目录下
+            path: /root/.kube/
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 0
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  revisionHistoryLimit: 7
+  progressDeadlineSeconds: 600
