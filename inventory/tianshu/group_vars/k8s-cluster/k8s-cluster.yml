@@ -23,7 +23,7 @@ kube_api_anonymous_auth: true
 kube_version: v1.18.10
 
 # kubernetes image repo define
-kube_image_repo: registry.cn-hangzhou.aliyuncs.com/google_containers
+# kube_image_repo: k8s.gcr.io
 
 # Where the binaries will be downloaded.
 # Note: ensure that you've enough disk space (about 1G)
@@ -81,7 +81,7 @@ kube_users:
 
 # Choose network plugin (cilium, calico, contiv, weave or flannel. Use cni for generic cni plugin)
 # Can also be set to 'cloud', which lets the cloud provider setup appropriate routing
-kube_network_plugin: calio
+kube_network_plugin: calico
 
 # Setting multi_networking to true will install Multus: https://github.com/intel/multus-cni
 kube_network_plugin_multus: false

@@ -21,6 +21,7 @@ inventory/*
 !inventory/local
 !inventory/sample
 !inventory/k8s.python279.org
+!inventory/tianshu
 inventory/*/artifacts/
 
 # Byte-compiled / optimized / DLL files

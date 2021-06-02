@@ -91,15 +91,23 @@ pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
 
 ## local reposorities
-registry_host: docker.io
-files_repo: http://mirrors.uat.enflame.cn
+registry_host: harbor.test.tianshu.cn
+files_repo: http://mirrors.test.tianshu.cn
+ubuntu_repo: http://mirrors.test.tianshu.cn/mirrors/mirrors.tuna.tsinghua.edu.cn
 
 # Registry overrides
-gcr_image_repo: registry.cn-hangzhou.aliyuncs.com/google_containers
+gcr_image_repo: "{{ registry_host }}/k8s.gcr.io"
+kube_image_repo: "{{ registry_host }}/k8s.gcr.io"
 docker_image_repo: "{{ registry_host }}"
 quay_image_repo: "{{ registry_host }}/quay.io"
 
+kubeadm_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubeadm"
+kubectl_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubectl"
+kubelet_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubelet"
+cni_download_url: "{{ files_repo }}/github.com/containernetworking/plugins/releases/download/{{ cni_version }}/cni-plugins-linux-{{ image_arch }}-{{ cni_version }}.tgz"
+calicoctl_download_url: "{{ files_repo }}/kubernetes/calico/{{ calico_ctl_version }}/calicoctl-linux-{{ image_arch }}"
+
 # Ubuntu
 ## Docker
-docker_ubuntu_repo_base_url: https://download.docker.com/linux/ubuntu
-docker_ubuntu_repo_gpgkey: https://download.docker.com/linux/ubuntu/gpg
+docker_ubuntu_repo_base_url: "{{ ubuntu_repo }}/docker-ce/linux/ubuntu"
+docker_ubuntu_repo_gpgkey: "{{ ubuntu_repo }}/docker-ce/linux/ubuntu/gpg"
