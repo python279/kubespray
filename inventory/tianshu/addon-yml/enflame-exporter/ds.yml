@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: enflame-exporter-daemonset
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      name: enflame-exporter-ds
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: enflame-exporter-ds
+    spec:
+      nodeSelector:
+        enflame-k8s-device-plugin: ture
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Equal
+          value: ''
+      hostNetwork: true
+      containers:
+        - name: enlame-exporter
+          image: harbor.uat.enflame.cn/enflame.cn/enflame-exporter:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          ports:
+            - name: exporterport
+              protocol: TCP
+              containerPort: 9401
+              hostPort: 9401
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 2000Mi
+              cpu: 2000m
+          volumeMounts:
+            - name: datapath
+              mountPath: /data/enflame
+            - name: syspath
+              mountPath: /sys
+      volumes:
+        - name: datapath
+          hostPath:
+            path: /data/enflame
+        - name: syspath
+          hostPath:
+            path: /sys

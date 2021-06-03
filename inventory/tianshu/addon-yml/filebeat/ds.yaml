@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: filebeat
+  name: filebeat
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: filebeat
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: filebeat
+    spec:
+      serviceAccountName: filebeat
+      terminationGracePeriodSeconds: 30
+      containers:
+      - image: harbor.uat.enflame.cn/library/filebeat:6.8.15
+        name: filebeat
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+          requests:
+            cpu: 250m
+            memory: 250Mi
+        args: [
+          "-c", "/etc/filebeat.yml",
+          "-e",
+        ]
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+        - name: config
+          mountPath: /etc/filebeat.yml
+          readOnly: true
+          subPath: filebeat.yml
+        - name: prospectors
+          mountPath: /usr/share/filebeat/prospectors.d
+          readOnly: true
+        - name: data
+          mountPath: /usr/share/filebeat/data
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          defaultMode: 0600
+          name: filebeat-config
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      - name: prospectors
+        configMap:
+          defaultMode: 0600
+          name: filebeat-prospectors
+      - name: data
+        #persistentVolumeClaim:
+        #  claimName: filebeat-data
+        emptyDir: {}

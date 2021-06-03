@@ -91,9 +91,9 @@ pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
 
 ## local reposorities
-registry_host: harbor.test.tianshu.cn
-files_repo: http://mirrors.test.tianshu.cn
-ubuntu_repo: http://mirrors.test.tianshu.cn/mirrors/mirrors.tuna.tsinghua.edu.cn
+registry_host: harbor.uat.enflame.cn
+files_repo: http://mirrors.uat.enflame.cn
+ubuntu_repo: http://mirrors.tuna.tsinghua.edu.cn
 
 # Registry overrides
 gcr_image_repo: "{{ registry_host }}/k8s.gcr.io"

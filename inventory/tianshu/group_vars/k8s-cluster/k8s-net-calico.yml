@@ -69,7 +69,7 @@ calico_vxlan_mode: 'Never'
 # * can-reach=DESTINATION
 # * interface=INTERFACE-REGEX
 # see https://docs.projectcalico.org/reference/node/configuration
-calico_ip_auto_method: "interface=eth1"
+calico_ip_auto_method: "can-reach=10.12.110.1"
 # Choose the iptables insert mode for Calico: "Insert" or "Append".
 # calico_felix_chaininsertmode: Insert
 

@@ -26,7 +26,7 @@ spec:
           value: ''
       priorityClassName: "system-node-critical"
       containers:
-      - image: harbor.test.tianshu.cn/enflame.cn/k8s-device-plugin:1.15.760
+      - image: harbor.uat.enflame.cn/enflame.cn/k8s-device-plugin:latest
         name: enflame-k8s-device-plugin
         imagePullPolicy: Always
         securityContext:
