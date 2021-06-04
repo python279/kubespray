@@ -37,10 +37,7 @@ loadbalancer_apiserver_healthcheck_port: 8081
 ### OTHER OPTIONAL VARIABLES
 
 ## Upstream dns servers
-upstream_dns_servers:
-  - 10.0.2.2
-  - 8.8.8.8
-  - 8.8.4.4
+upstream_dns_servers: []
 
 ## There are some changes specific to the cloud providers
 ## for instance we need to encapsulate packets with some network plugins
@@ -90,7 +87,7 @@ download_container: true
 deploy_container_engine: true
 
 ## Set Pypi repo and cert accordingly
-pyrepo_index: http://pypi.douban.com/simple
+pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
 
 ## local reposorities
@@ -102,23 +99,15 @@ ubuntu_repo: http://archive.python279.org/mirrors/mirrors.tuna.tsinghua.edu.cn
 
 # Registry overrides
 gcr_image_repo: "{{ registry_host }}/k8s.gcr.io"
+kube_image_repo: "{{ registry_host }}/k8s.gcr.io"
 docker_image_repo: "{{ registry_host }}"
 quay_image_repo: "{{ registry_host }}/quay.io"
 
 kubeadm_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubeadm"
 kubectl_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubectl"
 kubelet_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubelet"
-# etcd is optional if you **DON'T** use etcd_deployment=host
-#etcd_download_url: "{{ files_repo }}/kubernetes/etcd/etcd-{{ etcd_version }}-linux-amd64.tar.gz"
 cni_download_url: "{{ files_repo }}/github.com/containernetworking/plugins/releases/download/{{ cni_version }}/cni-plugins-linux-{{ image_arch }}-{{ cni_version }}.tgz"
-#crictl_download_url: "{{ files_repo }}/kubernetes/cri-tools/crictl-{{ crictl_version }}-{{ ansible_system | lower }}-{{ image_arch }}.tar.gz"
-# If using Calico
-#calicoctl_download_url: "{{ files_repo }}/kubernetes/calico/{{ calico_ctl_version }}/calicoctl-linux-{{ image_arch }}"
-
-# CentOS/Redhat
-## Docker
-docker_rh_repo_base_url: "{{ yum_repo }}/docker-ce/$releasever/$basearch"
-docker_rh_repo_gpgkey: "{{ yum_repo }}/docker-ce/gpg"
+calicoctl_download_url: "{{ files_repo }}/kubernetes/calico/{{ calico_ctl_version }}/calicoctl-linux-{{ image_arch }}"
 
 # Ubuntu
 ## Docker

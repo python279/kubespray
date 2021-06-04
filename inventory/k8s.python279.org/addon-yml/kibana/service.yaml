@@ -11,6 +11,7 @@ spec:
   selector:
     app.kubernetes.io/component: logging
     app.kubernetes.io/name: kibana
+  type: NodePort
   ports:
   - port: 5601
     protocol: TCP

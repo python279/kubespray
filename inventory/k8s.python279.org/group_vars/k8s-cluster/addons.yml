@@ -34,11 +34,11 @@ nfs_client_provisioner_storageclass:
   name: managed-nfs-storage
   reclaimPolicy: Delete
   accessModes: ReadWriteOnce
-  storageSize: 1Gi
+  storageSize: 10Gi
 nfs_client_provisioner_resources: 
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 1000m
+    memory: 1Gi
   requests:
     cpu: 100m
     memory: 128Mi
