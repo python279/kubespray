@@ -1,0 +1,27 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  config.yml: |-
+    global:
+    templates:
+      - '/etc/alertmanager/template/*.tmpl'
+    route:
+      receiver: alert-emailer
+      group_by: ['alertname', 'priority']
+      group_wait: 10s
+      repeat_interval: 30m
+      routes: []
+    receivers:
+      - name: alert-emailer
+        email_configs:
+        - to: devops@python279.org
+          send_resolved: false
+          from: it@python279.org
+          smarthost: smtp.python279.org:25
+          require_tls: false
+          auth_username: it
+          auth_password: xxxxxx
