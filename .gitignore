@@ -21,6 +21,7 @@ inventory/*
 !inventory/local
 !inventory/sample
 !inventory/k8s.python279.org
+!inventory/labcloud.uat.enflame.cn
 !inventory/tianshu
 inventory/*/artifacts/
 

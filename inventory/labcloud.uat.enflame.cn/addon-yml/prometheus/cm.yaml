@@ -41,6 +41,16 @@ data:
           replacement: ${1}:9100
           target_label: __address__
       
+      - job_name: 'enflame-exporter'
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+        - source_labels: [__address__]
+          action: replace
+          regex: (.+):.+
+          replacement: ${1}:9401
+          target_label: __address__
+
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
         - role: endpoints
