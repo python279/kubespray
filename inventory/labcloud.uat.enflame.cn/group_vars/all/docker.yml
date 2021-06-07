@@ -54,4 +54,4 @@ docker_registry_mirrors:
 
 ## A string of extra options to pass to the docker daemon.
 ## This string should be exactly as you wish it to appear.
-docker_options: "--log-driver=json-file --log-level=warn --default-shm-size=1G --default-ulimit memlock=-1:-1 --default-ulimit stack=67108864:67108864 --default-ulimit nofile=65536:65536"
+docker_options: "--log-driver=json-file --log-level=warn"

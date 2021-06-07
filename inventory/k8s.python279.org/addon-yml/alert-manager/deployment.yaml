@@ -39,13 +39,14 @@ spec:
         resources:
             limits:
               cpu: 4000m
-              memory: 8Gi
+              memory: 4Gi
             requests:
               cpu: 250m
               memory: 250Mi
         volumeMounts:
-        - name: config-volume
+        - name: config
           mountPath: /etc/alertmanager
+          readOnly: true
         - name: alertmanager
           mountPath: /alertmanager
         livenessProbe:
@@ -67,10 +68,14 @@ spec:
           successThreshold: 1
           failureThreshold: 3
       volumes:
-      - name: config-volume
+      - name: config
         configMap:
           name: alertmanager-config
-          key: config
+          items:
+          - key: config.yml
+            path: config.yml
+          - key: default.tmpl
+            path: template/default.tmpl
       - name: alertmanager
         persistentVolumeClaim:
           claimName: alertmanager-pvc

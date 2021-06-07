@@ -66,9 +66,8 @@ spec:
           failureThreshold: 3
       volumes:
         - name: grafana-storage
-          #persistentVolumeClaim:
-          #  claimName: grafana-pvc
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: grafana-pvc
         - name: grafana-datasources
           configMap:
               defaultMode: 420

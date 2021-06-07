@@ -38,7 +38,7 @@ nfs_client_provisioner_storageclass:
 nfs_client_provisioner_resources: 
   limits:
     cpu: 1000m
-    memory: 1025Mi
+    memory: 1Gi
   requests:
     cpu: 100m
     memory: 128Mi

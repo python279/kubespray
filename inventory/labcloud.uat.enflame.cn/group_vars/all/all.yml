@@ -87,18 +87,19 @@ download_container: true
 deploy_container_engine: true
 
 ## Set Pypi repo and cert accordingly
-pyrepo_index: http://pypi.tuna.tsinghua.edu.cn/simple
+pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
 
 ## local reposorities
 registry_host: harbor.uat.enflame.cn
 files_repo: http://mirrors.uat.enflame.cn
-yum_repo: http://mirrors.uat.enflame.cn/mirrors/mirrors.tuna.tsinghua.edu.cn
-debian_repo: http://mirrors.uat.enflame.cn/mirrors/mirrors.tuna.tsinghua.edu.cn
-ubuntu_repo: http://mirrors.uat.enflame.cn/mirrors/mirrors.tuna.tsinghua.edu.cn
+yum_repo: "{{ files_repo }}//mirrors/mirrors.tuna.tsinghua.edu.cn"
+debian_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"
+ubuntu_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"
 
 # Registry overrides
 gcr_image_repo: "{{ registry_host }}/k8s.gcr.io"
+kube_image_repo: "{{ registry_host }}/k8s.gcr.io"
 docker_image_repo: "{{ registry_host }}"
 quay_image_repo: "{{ registry_host }}/quay.io"
 
@@ -106,7 +107,7 @@ kubeadm_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-releas
 kubectl_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubectl"
 kubelet_download_url: "{{ files_repo }}/storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/{{ image_arch }}/kubelet"
 cni_download_url: "{{ files_repo }}/github.com/containernetworking/plugins/releases/download/{{ cni_version }}/cni-plugins-linux-{{ image_arch }}-{{ cni_version }}.tgz"
-#calicoctl_download_url: "{{ files_repo }}/kubernetes/calico/{{ calico_ctl_version }}/calicoctl-linux-{{ image_arch }}"
+calicoctl_download_url: "{{ files_repo }}/kubernetes/calico/{{ calico_ctl_version }}/calicoctl-linux-{{ image_arch }}"
 
 # Ubuntu
 ## Docker

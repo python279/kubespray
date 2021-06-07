@@ -102,3 +102,4 @@ target/
 venv/
 ENV/
 .DS_Store
+.vscode

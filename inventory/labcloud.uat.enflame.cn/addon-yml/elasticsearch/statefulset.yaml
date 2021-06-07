@@ -9,7 +9,7 @@ metadata:
   namespace: monitoring
 spec:
   serviceName: elasticsearch
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: logging

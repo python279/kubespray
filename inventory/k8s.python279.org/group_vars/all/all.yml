@@ -92,10 +92,10 @@ pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 
 ## local reposorities
 registry_host: harbor.python279.org
-files_repo: http://archive.python279.org
-yum_repo: http://archive.python279.org/mirrors/mirrors.tuna.tsinghua.edu.cn
-debian_repo: http://archive.python279.org/mirrors/mirrors.tuna.tsinghua.edu.cn
-ubuntu_repo: http://archive.python279.org/mirrors/mirrors.tuna.tsinghua.edu.cn
+files_repo: http://mirrors.python279.org
+yum_repo: "{{ files_repo }}//mirrors/mirrors.tuna.tsinghua.edu.cn"
+debian_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"
+ubuntu_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"
 
 # Registry overrides
 gcr_image_repo: "{{ registry_host }}/k8s.gcr.io"
