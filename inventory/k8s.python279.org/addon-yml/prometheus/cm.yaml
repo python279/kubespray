@@ -26,6 +26,8 @@ data:
         kubernetes_sd_configs:
           - role: node
         relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
           - source_labels: [__address__]
             action: replace
             regex: (.+):.+

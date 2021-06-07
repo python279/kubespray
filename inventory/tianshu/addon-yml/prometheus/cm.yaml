@@ -26,6 +26,8 @@ data:
         kubernetes_sd_configs:
           - role: node
         relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
           - source_labels: [__address__]
             action: replace
             regex: (.+):.+
@@ -35,9 +37,11 @@ data:
         kubernetes_sd_configs:
           - role: node
         relabel_configs:
-          - source_labels: [__meta_kubernetes_service_metadata_enflame_k8s_device_plugin]
+          - source_labels: [__meta_kubernetes_node_labelpresent_enflame_k8s_device_plugin]
             action: keep
             regex: true
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
           - source_labels: [__address__]
             action: replace
             regex: (.+):.+
