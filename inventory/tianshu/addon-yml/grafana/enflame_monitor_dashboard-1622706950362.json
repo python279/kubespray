@@ -1,4 +1,52 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.3"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -17,8 +65,8 @@
   "editable": true,
   "gnetId": 12239,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1622706659887,
+  "id": null,
+  "iteration": 1623115461068,
   "links": [
     {
       "icon": "dashboard",
@@ -30,7 +78,510 @@
   ],
   "panels": [
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "purple",
+                "value": 50
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 33,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.5.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "enflame_power_usage{instance=~\"^$node$\"}",
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU {{ID}}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "DTU Power Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "enflame_memory_total_size_GB{instance=~\"^$node$\"}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU {{ID}} (GB)",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "DTU  Memory Size (GB)",
+      "type": "stat"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "degree"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "enflame_dtu_temperatures{instance=~\"^$node$\"}",
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "$$hashKey": "object:138",
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 90,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "DTU Temperature",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1754",
+          "format": "degree",
+          "label": null,
+          "logBase": 1,
+          "max": "100",
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1755",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 28,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "enflame_dtu_clock{instance=~\"^$node$\"}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU{{ID}} (Hz)",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "DTU Clock (Hz)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:84",
+          "format": "none",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:85",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "hiddenSeries": false,
+      "id": 37,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": false,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "enflame_dtu_usage{instance=~\"^$node$\"}",
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "DTU Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:504",
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": "100",
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:505",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 39,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.5.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "avg(enflame_dtu_usage{instance=~\"^$node$\"}) by (instance, ID)",
+          "interval": "",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "DTU Avg Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -79,7 +630,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 24
       },
       "id": 26,
       "options": {
@@ -98,10 +649,11 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_health",
+          "exemplar": true,
+          "expr": "enflame_dtu_health{instance=~\"^$node$\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -111,7 +663,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -207,7 +759,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 24
       },
       "id": 20,
       "options": {
@@ -226,9 +778,10 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_state",
+          "exemplar": true,
+          "expr": "enflame_dtu_state{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -238,7 +791,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -287,7 +840,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 32
       },
       "id": 38,
       "options": {
@@ -306,10 +859,11 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_heartbeat",
+          "exemplar": true,
+          "expr": "enflame_dtu_heartbeat{instance=~\"^$node$\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -319,7 +873,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -367,7 +921,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 32
       },
       "id": 34,
       "options": {
@@ -386,10 +940,11 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_ecc_status_enabled",
+          "exemplar": true,
+          "expr": "enflame_dtu_ecc_status_enabled{instance=~\"^$node$\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -399,7 +954,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -429,7 +984,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 40
       },
       "id": 44,
       "options": {
@@ -448,9 +1003,10 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_current_reset_count",
+          "exemplar": true,
+          "expr": "enflame_dtu_current_reset_count{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -460,7 +1016,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -490,7 +1046,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 40
       },
       "id": 35,
       "options": {
@@ -511,9 +1067,10 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_ecc_status_single_bit_error",
+          "exemplar": true,
+          "expr": "enflame_dtu_ecc_status_single_bit_error{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -527,7 +1084,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -541,7 +1098,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 45,
@@ -573,9 +1130,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_total_reset_count",
+          "exemplar": true,
+          "expr": "enflame_dtu_total_reset_count{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -623,7 +1181,7 @@
       }
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -653,7 +1211,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 48
       },
       "id": 36,
       "options": {
@@ -674,9 +1232,10 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_ecc_status_double_bit_error",
+          "exemplar": true,
+          "expr": "enflame_dtu_ecc_status_double_bit_error{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "DTU {{ID}}",
+          "legendFormat": "{{instance}} / DTU{{ID}}",
           "refId": "A"
         }
       ],
@@ -690,7 +1249,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -703,173 +1262,7 @@
         "h": 8,
         "w": 18,
         "x": 0,
-        "y": 32
-      },
-      "hiddenSeries": false,
-      "id": 37,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": false,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "enflame_dtu_usage",
-          "interval": "",
-          "legendFormat": "DTU {{ID}}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "DTU Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:504",
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:505",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 80
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 32
-      },
-      "id": 39,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.5.3",
-      "targets": [
-        {
-          "expr": "avg(enflame_dtu_usage)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "DTU Avg Usage",
-      "type": "gauge"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 18,
-        "x": 0,
-        "y": 40
+        "y": 56
       },
       "hiddenSeries": false,
       "id": 10,
@@ -902,11 +1295,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_cluster_usage",
+          "exemplar": true,
+          "expr": "enflame_dtu_cluster_usage{instance=~\"^$node$\"}",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} Cluster {{Cluster}}",
+          "legendFormat": "Cluster{{Cluster}}",
           "refId": "A"
         }
       ],
@@ -954,7 +1348,7 @@
       }
     },
     {
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -989,7 +1383,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 40
+        "y": 56
       },
       "id": 24,
       "options": {
@@ -1008,9 +1402,10 @@
       "pluginVersion": "7.5.3",
       "targets": [
         {
-          "expr": "enflame_dtu_count",
+          "exemplar": true,
+          "expr": "enflame_dtu_count{instance=~\"^$node$\"}",
           "interval": "",
-          "legendFormat": "Host {{Host}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -1024,217 +1419,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "unit": "degree"
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 48
-      },
-      "hiddenSeries": false,
-      "id": 6,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "enflame_dtu_temperatures",
-          "interval": "",
-          "legendFormat": "DTU {{ID}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "$$hashKey": "object:138",
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 90,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "DTU Temperature",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1754",
-          "format": "degree",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1755",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 48
-      },
-      "hiddenSeries": false,
-      "id": 28,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "enflame_dtu_clock",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "DTU {{ID}} (Hz)",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "DTU Clock (Hz)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:84",
-          "format": "none",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:85",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "description": "",
       "fieldConfig": {
@@ -1250,7 +1435,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 64
       },
       "hiddenSeries": false,
       "id": 40,
@@ -1284,12 +1469,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_esl_throughput_mbps",
+          "exemplar": true,
+          "expr": "enflame_dtu_esl_throughput_mbps{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} Port {{Port}} {{Metrics}} ",
+          "legendFormat": "{{instance}} / DTU {{ID}} Port {{Port}} {{Metrics}} ",
           "refId": "A"
         }
       ],
@@ -1342,7 +1528,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -1356,7 +1542,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 64
       },
       "hiddenSeries": false,
       "id": 27,
@@ -1390,12 +1576,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_esl_nak_10ms",
+          "exemplar": true,
+          "expr": "enflame_dtu_esl_nak_10ms{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} Port {{Port}} {{Metrics}}",
+          "legendFormat": "{{instance}} / DTU {{ID}} Port {{Port}} {{Metrics}}",
           "refId": "A"
         }
       ],
@@ -1448,7 +1635,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "description": "",
       "fieldConfig": {
@@ -1464,7 +1651,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 64
+        "y": 72
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1498,12 +1685,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_esl_link_speed",
+          "exemplar": true,
+          "expr": "enflame_dtu_esl_link_speed{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} Port {{Port}} {{Metrics}} ",
+          "legendFormat": "{{instance}} / DTU {{ID}} Port {{Port}} {{Metrics}} ",
           "refId": "A"
         }
       ],
@@ -1568,7 +1756,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -1582,7 +1770,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 72
       },
       "hiddenSeries": false,
       "id": 41,
@@ -1616,12 +1804,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_pcie_link_width",
+          "exemplar": true,
+          "expr": "enflame_dtu_pcie_link_width{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} {{Metrics}}",
+          "legendFormat": "{{instance}} / DTU {{ID}} {{Metrics}}",
           "refId": "A"
         }
       ],
@@ -1674,7 +1863,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "description": "",
       "fieldConfig": {
@@ -1690,7 +1879,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 72
+        "y": 80
       },
       "hiddenSeries": false,
       "id": 42,
@@ -1724,12 +1913,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_esl_link_info",
+          "exemplar": true,
+          "expr": "enflame_dtu_esl_link_info{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} Port {{Port}} {{Metrics}} ",
+          "legendFormat": "{{instance}} / DTU {{ID}} Port {{Port}} {{Metrics}} ",
           "refId": "A"
         }
       ],
@@ -1782,7 +1972,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -1796,7 +1986,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 72
+        "y": 80
       },
       "hiddenSeries": false,
       "id": 43,
@@ -1830,12 +2020,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "enflame_dtu_pcie_link_info",
+          "exemplar": true,
+          "expr": "enflame_dtu_pcie_link_info{instance=~\"^$node$\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "DTU {{ID}} {{Metrics}}",
+          "legendFormat": "{{instance}} / DTU {{ID}} {{Metrics}}",
           "refId": "A"
         }
       ],
@@ -1882,130 +2073,9 @@
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "purple",
-                "value": 50
-              },
-              {
-                "color": "yellow",
-                "value": 80
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 80
-      },
-      "id": 33,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.5.3",
-      "targets": [
-        {
-          "expr": "enflame_power_usage",
-          "interval": "",
-          "legendFormat": "DTU {{ID}}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "DTU Power Usage",
-      "type": "gauge"
-    },
-    {
-      "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "purple",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 80
-      },
-      "id": 31,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.3",
-      "targets": [
-        {
-          "expr": "enflame_memory_total_size_GB",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "DTU {{ID}} (GB)",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "DTU  Memory Size (GB)",
-      "type": "stat"
     }
   ],
-  "refresh": "10s",
+  "refresh": "30m",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -2013,54 +2083,19 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "m320-test-worker-02",
-          "value": "m320-test-worker-02"
-        },
-        "datasource": "prometheus",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(enflame_up,instance)",
         "description": null,
         "error": null,
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "节点",
         "multi": false,
         "name": "node",
         "options": [],
         "query": {
           "query": "label_values(enflame_up,instance)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "prometheus",
-        "definition": "label_values(enflame_dtu_health,ID)",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": true,
-        "label": "加速卡",
-        "multi": false,
-        "name": "dtu",
-        "options": [],
-        "query": {
-          "query": "label_values(enflame_dtu_health,ID)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2095,5 +2130,5 @@
   "timezone": "",
   "title": "Enflame Monitor Dashboard",
   "uid": "Oxed_c6Wz",
-  "version": 3
+  "version": 8
 }
