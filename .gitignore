@@ -18,8 +18,7 @@ vagrant/
 
 # Ansible inventory
 inventory/*
-!inventory/local
-!inventory/sample
+!inventory/single
 !inventory/k8s.python279.org
 !inventory/labcloud.uat.enflame.cn
 !inventory/tianshu
