@@ -1,1 +1,0 @@
-https://github.com/bibinwilson/kube-state-metrics
