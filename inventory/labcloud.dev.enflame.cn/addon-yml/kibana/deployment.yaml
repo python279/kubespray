@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: logging
+    app.kubernetes.io/name: kibana
+  name: kibana
+  namespace: monitoring
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type:
+      RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: kibana
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: logging
+        app.kubernetes.io/name: kibana
+    spec:
+      containers:
+      - image: harbor.uat.enflame.cn/library/kibana:6.8.15
+        name: kibana
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 8Gi
+          requests:
+            cpu: 250m
+            memory: 250Mi
+        env:
+          - name: ELASTICSEARCH_URL
+            value: http://elasticsearch:9200
+        ports:
+        - containerPort: 5601
+          name: ui
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5601
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5601
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
