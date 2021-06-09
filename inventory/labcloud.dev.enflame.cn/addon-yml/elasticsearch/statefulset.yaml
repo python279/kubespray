@@ -40,7 +40,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: elasticsearch-data
-          mountPath: /data
+          mountPath: /usr/share/elasticsearch/data
         env:
         - name: "NAMESPACE"
           valueFrom:
