@@ -53,7 +53,7 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: discovery.zen.ping.unicast.hosts
-          value: "elasticsearch-0,elasticsearch-1"
+          value: "elasticsearch-0.elasticsearch,elasticsearch-1.elasticsearch"
         - name: discovery.zen.minimum_master_nodes
           value: "1"
         - name: ES_JAVA_OPTS
