@@ -55,7 +55,7 @@ spec:
         - name: discovery.zen.ping.unicast.hosts
           value: "elasticsearch-0.elasticsearch,elasticsearch-1.elasticsearch"
         - name: discovery.zen.minimum_master_nodes
-          value: "2"
+          value: "1"
         - name: ES_JAVA_OPTS
           value: "-Xms512m -Xmx512m"
         livenessProbe:
