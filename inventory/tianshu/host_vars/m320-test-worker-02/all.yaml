@@ -2,4 +2,4 @@
 node_labels:
   ingress: nginx
   Accelerator: enflame-t10
-  enflame-k8s-device-plugin: ture
+  enflame-k8s-device-plugin: true
