@@ -4,7 +4,7 @@
 dashboard_enabled: true
 
 # Helm deployment
-helm_enabled: false
+helm_enabled: true
 
 # Registry deployment
 registry_enabled: false
@@ -24,8 +24,8 @@ nfs_client_provisioner_namespace: kube-system
 nfs_client_provisioner_replicacount: 1
 nfs_client_provisioner_strategytype: Recreate
 nfs_client_provisioner_nfs:
-  server: 10.12.120.35
-  path: /data/managed-nfs-storage
+  server: 10.12.120.208
+  path: /mnt/nfs/managed-nfs-storage
   mountOptions:
 nfs_client_provisioner_storageclass:
   create: true
@@ -34,7 +34,7 @@ nfs_client_provisioner_storageclass:
   name: managed-nfs-storage
   reclaimPolicy: Delete
   accessModes: ReadWriteOnce
-  storageSize: 3Ti
+  storageSize: 10Ti
 nfs_client_provisioner_resources: 
   limits:
     cpu: 1000m
