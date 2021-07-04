@@ -1,4 +1,4 @@
 ---
 node_labels:
   Accelerator: enflame-i10
-  enflame-k8s-device-plugin: true
+  enflame-k8s-device-plugin: "true"

@@ -28,7 +28,7 @@ spec:
       containers:
       - image: harbor.uat.enflame.cn/enflame.cn/k8s-device-plugin:latest
         name: enflame-k8s-device-plugin
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
         volumeMounts:
