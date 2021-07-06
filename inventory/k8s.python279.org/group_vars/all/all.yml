@@ -18,9 +18,9 @@ bin_dir: /usr/local/bin
 
 ## External LB example config
 ## apiserver_loadbalancer_domain_name: "elb.some.domain"
-# loadbalancer_apiserver:
-#   address: 1.2.3.4
-#   port: 1234
+loadbalancer_apiserver:
+  address: 192.168.20.100
+  port: 8383
 
 ## Internal loadbalancers for apiservers
 loadbalancer_apiserver_localhost: true
@@ -91,8 +91,8 @@ pyrepo_index: https://mirrors.aliyun.com/pypi/simple
 # pyrepo_cert: /etc/ssl/certs/ca-certificates.crt
 
 ## local reposorities
-registry_host: harbor.python279.org
-files_repo: http://mirrors.python279.org
+registry_host: harbor.uat.enflame.cn
+files_repo: http://mirrors.uat.enflame.cn
 yum_repo: "{{ files_repo }}//mirrors/mirrors.tuna.tsinghua.edu.cn"
 debian_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"
 ubuntu_repo: "{{ files_repo }}/mirrors/mirrors.tuna.tsinghua.edu.cn"

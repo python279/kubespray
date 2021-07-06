@@ -98,7 +98,7 @@
     use: apt
   become: true
 
-- name: Install additional packages fro kubernetes
+- name: Install additional packages for kubernetes
   package:
     name:
       - nfs-common

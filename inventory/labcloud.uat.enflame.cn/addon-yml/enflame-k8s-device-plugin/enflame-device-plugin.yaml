@@ -18,7 +18,7 @@ spec:
         name: enflame-k8s-device-plugin
     spec:
       nodeSelector:
-        enflame-k8s-device-plugin: ture
+        enflame-k8s-device-plugin: true
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master

@@ -38,7 +38,7 @@ docker_rpm_keepcache: 0
 ## Can be ipaddress and domain_name.
 ## example define 172.19.16.11 or mirror.registry.io
 docker_insecure_registries:
-  - http://harbor.python279.org
+  - http://harbor.uat.enflame.cn
 
 ## Add other registry,example China registry mirror.
 docker_registry_mirrors:

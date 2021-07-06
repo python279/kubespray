@@ -1,0 +1,10 @@
+---
+docker_options: >
+  --add-runtime enflame=/usr/bin/enflame-container-runtime
+  --default-runtime=enflame
+  --log-driver=json-file
+  --log-level=warn
+  --default-shm-size=1G
+  --default-ulimit memlock=-1:-1
+  --default-ulimit stack=67108864:67108864
+  --default-ulimit nofile=65536:65536
