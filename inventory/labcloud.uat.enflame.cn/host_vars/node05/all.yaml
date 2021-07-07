@@ -1,4 +1,4 @@
 ---
 node_labels:
   Accelerator: nvidia-rtx3090
-  nvidia.com/gpu: "true"
+  nvidia-k8s-device-plugin: "true"
